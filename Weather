@@ -8,7 +8,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 
-public class test {
+public class Weather {
     public static void main(String[] args) {
         try {
             // 대림대학교의 위도 및 경도
