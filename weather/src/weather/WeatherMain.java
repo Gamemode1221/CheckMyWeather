@@ -41,7 +41,9 @@ public class WeatherMain {
                 memberList.add(new MemberDTO(id, pwd, mDate));
             }
 
-            pstmt = conn.prepareStatement("select id, location, weather, temperature, wDate from weather order by wDate asc");
+            rs = null;
+
+            pstmt = conn.prepareStatement("select id, location, weather, temperature, wDate from weather");
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 index = 1;
@@ -87,7 +89,7 @@ public class WeatherMain {
                                         pstmt.setString(4, w.getCurrentTemperature());
                                         pstmt.setDate(5, java.sql.Date.valueOf(LocalDate.now()));
 
-                                        pstmt.executeUpdate(sql);
+                                        pstmt.executeUpdate();
                                         break;
                                     case "3":
                                         break;
@@ -106,6 +108,7 @@ public class WeatherMain {
                     continue;
                 }
 
+                conn.close();
                 pstmt.close();
                 rs.close();
             }
@@ -121,12 +124,5 @@ public class WeatherMain {
             }
         }
         System.out.println("프로그램을 종료합니다.");
-
-        // 기본 정보 출력
-//        for (memberDTO model : memberList) {
-//            System.out.println("아이디 : " + model.getId() +
-//                    ", 비밀번호 : " + model.getPwd() +
-//                    ", 갱신일 : " + model.getmDate());
-//        }
     }
 }
