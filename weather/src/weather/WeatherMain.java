@@ -78,7 +78,6 @@ public class WeatherMain {
                                         System.out.println("기온 : " + w.getCurrentTemperature());
                                         break;
                                     case "2":
-//                                        insertDB(conn, id, w.getCurrentLocation(), w.getCurrentWeather(), w.getCurrentTemperature() + "");
                                         String sql = "insert into weather (id, location, weather, temperature, wDate) values(?, ?, ?, ?, ?)";
 
                                         pstmt = conn.prepareStatement(sql);
