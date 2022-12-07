@@ -23,14 +23,17 @@ public class Weather {
         return temperature;
     }
 
-    // 대림대학교의 위도 및 경도
-    private static String lat = "37.4036262"; // 위도
-    private static String lon = "126.9303398"; // 경도
-    private static String apiKey = "5c4e0cf0a8fbe52219385b47406bc016";
-    private static String urlStr = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey;
 
     public void checkWeather() {
+        // 포스팅 참고 (https://walkinpcm.blogspot.com/2016/03/java-open-api.html)
         try {
+            // 대림대학교의 위도 및 경도
+            String lat = "37.4036262"; // 위도
+            String lon = "126.9303398"; // 경도
+
+            String apiKey = "5c4e0cf0a8fbe52219385b47406bc016"; // openweathermap 사이트의 개인 API key
+            String urlStr = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey; // 위도, 경도, API key를 사용하여 날씨정보 획득
+
             String line;
             String result = "";
 
@@ -47,22 +50,19 @@ public class Weather {
             var jsonParser = new JSONParser();
             JSONObject jsonObj = (JSONObject) jsonParser.parse(result);
 
-            //지역 출력
+            // 지역 삽입
             location = jsonObj.get("name").toString();
-//            System.out.println("지역 : " + location);
 
-            //날씨 출력
+            // 날씨 삽입
             JSONArray weatherArray = (JSONArray) jsonObj.get("weather");
             JSONObject obj = (JSONObject) weatherArray.get(0);
             weather = obj.get("main").toString();
-//            System.out.println("날씨 : " + weather);
 
-            //온도 출력(절대온도라서 변환 필요)
+            // 온도 삽입 (절대온도에서 섭씨로 변환)
             JSONObject mainArray = (JSONObject) jsonObj.get("main");
             double kTemp = Double.parseDouble(mainArray.get("temp").toString());
             double temp = kTemp-273.15;
             temperature = (int) Math.round(temp) + "";
-//            System.out.printf("온도 : %.2f\n", temperature);
 
             br.close();
         } catch (Exception e) {
